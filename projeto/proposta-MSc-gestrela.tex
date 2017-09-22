@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+\usepackage[portuguese, brazilian, english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[top=3cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+\usepackage{tikz}
+\usepackage{textcomp}
+\usepackage{lscape}    % for landscape pages
+\usepackage{hyperref}  % to allow hyperlinks
+\usepackage{booktabs}  % nicer table borders
+\usepackage{subfigure} % add subfigures
+
+\title{Projeto MSc}
+
+% Figures directory
+\graphicspath{{./figures/}} 
+
+\definecolor{myblue}{RGB}{80,80,160}
+\definecolor{mygreen}{RGB}{80,160,80}
+\setstretch{1.5}
+
+\begin{document}
+
+% FAPESP demands the usage of double spacing
+%
+\doublespacing
+
+\selectlanguage{brazilian}
+\thispagestyle{empty} 
+\begin{flushright}
+    {\LARGE Identificação de vias de sinalização celular baseada em repositórios de cinética de reações bioquímicas}
+
+  \bigskip
+  \bigskip
+        
+  {\large {\bf Beneficiário:} \href{mailto:gustavo.estrela.matos@usp.br}{Gustavo Estrela de Matos}\\ 
+  {\bf Pesquisador Responsável:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}\\
+  \bigskip
+Centro de Toxinas, Imuno-resposta e Sinalização Celular (CeTICS)\\
+Laboratório Especial de Ciclo Celular (LECC)\\
+  Instituto Butantan, São Paulo, \today.\\
+  }
+
+  \bigskip
+  \bigskip
+\end{flushright}
+\begin{abstract}
+{\color{blue}[A fazer (máximo 20 linhas).]}
+\end{abstract}
+
+\newpage
+\thispagestyle{empty} 
+\selectlanguage{english}
+\begin{flushright}
+    {\LARGE Identification of cell signaling networks based on biochemical reaction kinetics repositories}
+
+  \bigskip
+  \bigskip
+        
+  {\large {\bf Student:} \href{mailto:gustavo.estrela.matos@usp.br}{Gustavo Estrela de Matos}\\ 
+  {\bf Supervisor:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}\\
+  \bigskip
+Center of Toxins, Immune-response and Cell Signaling (CeTICS)\\
+Laboratório Especial de Toxinologia Aplicada (LETA)\\
+  Instituto Butantan, São Paulo, \today.\\
+  }
+  \bigskip
+  \bigskip
+\end{flushright}
+\begin{abstract}
+{\color{blue}[To do (20 lines maximum).]}
+\end{abstract}
+
+\newpage
+\selectlanguage{brazilian}
+\tableofcontents
+\newpage
+
+\section{Introdução}
+
+\begin{itemize}
+
+\item Enunciar o problema de identificação de vias de sinalização celular. Ilustrá-lo utilizando o exemplo do paper da Methods in Molecular Biology~\cite{Reis2017interdisciplinary}. Para isto monte uma figura com 4 subfiguras, mostrando a simulação do modelo inicial, e depois com o acréscimo de uma reação (os arquivos das subfiguras estão na pasta ``figures").
+
+\item Explicar, de forma concisa, a abordagem da Lulu para tentar resolver o problema~\cite{Wu2015metodo}, que envolve o uso do repositório de interatomas KEGG~\cite{Kanehisa2000kegg}. Citar limitações dessa abordagem, como por exemplo o uso do SFS como função custo para fazer a seleção de modelos~\cite{Whitney:1971}.
+
+\end{itemize}
+
+%------------------------------------------------------------------------------%
+
+\section{Objetivos}
+
+\begin{itemize}
+
+\item \underline{Geral:} desenvolver uma abordagem mais efetiva para auxiliar na identificação de vias de sinalização celular. Esta abordagem teria como ponto de partida o trabalho da Lulu e incluiria soluções para as limitações do mesmo, que foram discutidas na seção anterior.
+
+\item \underline{Específico:} aplicar a metodologia na identificação de vias de sinalização celular relevantes em nosso estudo de caso, a linhagem tumoral murina Y1.
+
+\end{itemize}
+
+%------------------------------------------------------------------------------%
+
+\section{Metodologia}
+
+
+
+\subsection{Desafios científicos}
+
+\begin{enumerate}
+
+\item Realizar a seleção de modelos utilizando uma estratégia global ao invés de incremental. Para este fim, faremos a redução do problema da seleção de modelos para um problema de seleção de características, o que exigirá:
+\begin{itemize}
+  \item Definir uma função custo apropriada, que leve em consideração a penalização por {\em overfitting} decorrente do acréscimo de novas espécies químicas e/ou reações sem a inclusão de novas medidas experimentais para ajustar o modelo aumentado. Uma possibilidade seria o uso do critério de informação de Akaike ({\em Akaike's Information Criterion} -- AIC)~\cite{bozdogan1987model}, cujo princípio foi aplicado com sucesso em seleção de modelos no contexto de discriminação de classes de redes biológicas~\cite{takahashi2012discriminating}. Também investigaremos para este fim o uso de abordagens Bayesianas~\cite{kirk2013model}, como por exemplo a técnica conhecida como {\em Bayesian inference-based modeling} (BIBm)~\cite{Xu2010}.
+
+  \item Escolher um algoritmo de seleção de características. Critérios que penalizam {\em overfitting} provavelmente induzirão curvas em U nas cadeias do reticulado Booleano induzido pelo espaço de busca, o que nos permitirá aproximar o problema de seleção de características através do problema de otimização U-curve. Como o cálculo da função custo provavelmente será computacionalmente muito intensivo, o melhor algoritmo para esse fim tende a ser o U-Curve-Search (UCS)~\cite{reis2012minimizaccao,reis2017ucsr}.
+\end{itemize}
+
+\item Contornar o problema da incompletude dos bancos de dados de interatomas (e.g., KEGG), que se dá no nível de estrutura da via de sinalização e também na ausência de constantes de velocidade.
+  \begin{itemize}
+     \item{\bf Estrutura da via de sinalização.} \href{http://www.genome.jp/kegg-bin/show\_pathway?mmu04014}{no mapa da via de sinalização de Ras em camundongo}, existe uma aresta dizendo que Raf1 ativa MEK, mas não como se dá tal ativação. Por exemplo, no modelo apresentado na introdução, MEK é ativado após ser fosforilado duas vezes pela forma ativa de Raf1, dinâmica que exige duas equações para ser descrita em termos de cinética química. Para lidar com este problema, precisaremos estabelecer a lei cinética (tipo de reação) a ser utilizada de acordo com a natureza das espécies químicas envolvidas em uma dada interação. No exemplo dado, sabe-se que a ativação de MEK por Raf é ultrassensível, e que portanto pode ser modelada utilizando a equação de Hill~\cite{huang1996ultrasensitivity}.
+     \item{\bf Ausência de constantes de velocidade.} Dificulta tanto a estimação quanto o problema de otimização. Vamos contornar isso coletando e organizando informações extraídas de repositórios tais como o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, Brenda~\cite{doi:10.1093/nar/gkh081}, BioNumbers~\cite{milo2009bionumbers}, e possivelmente também  BioModels~\cite{le2006biomodels}. 
+  \end{itemize}
+\end{enumerate}
+
+
+\subsection{Desafios tecnológicos}
+
+\begin{enumerate}
+
+% Obs: o primeiro item já estamos adiantando com os trabalhos para o X-Meeting 2017.
+%
+\item Integração apropriada do featsel~\cite{Reis2017featsel} com o SigNetSim~\cite{Noel2017SigNetSim} para seleção de modelos.
+
+\item Organização das informações coletadas em um banco de dados relacional, que será integrado ao \href{http://cetics.butantan.gov.br/ceticsdb/accounts/login/?next=/ceticsdb/}{CeTICSdb}, repositório de ômicas desenvolvido e mantido pelo grupo de Biologia Computacional do CeTICS.
+
+\end{enumerate}
+
+%------------------------------------------------------------------------------%
+
+\section{Plano de trabalho e cronograma de execução}
+
+{\color{blue}[Tente detalhar os trabalhos que serão necessários, dados os objetivos e desafios metodológicos.]}
+
+\subsection{Cronograma proposto}
+
+{\color{blue}[Tabela análoga ao dos projetos anteriores.]}
+
+%------------------------------------------------------------------------------%
+
+\section{Forma de análise e disseminação de resultados}
+
+{\color{blue}[Análogo ao nosso último projeto.]}
+
+%------------------------------------------------------------------------------%
+
+\addcontentsline{toc}{section}{Referências}
+\bibliographystyle{unsrt} 
+\bibliography{bib-proposta-MSc-gestrela}
+
+\end{document}
+
