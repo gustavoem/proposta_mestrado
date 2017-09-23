@@ -83,6 +83,39 @@ Laboratório Especial de Toxinologia Aplicada (LETA)\\
 
 \section{Introdução}
 
+A sinalização celular é o processo de troca de informações que permite
+às células interagir com o ambiente por meio de interações entre
+espécies químicas. Chamamos um conjunto de interações desse tipo que 
+estão associadas a uma função celular de uma via de sinalização celular.
+A sinalização celular coordena diversos processos da célula e entender 
+a topologia de suas vias pode ajudar a melhorar o entendimento de 
+processos celulares assim como permitir criar novos tratamentos para 
+doenças como o câncer e diabetes, que podem ser causadas por anomalias 
+nestas vias.
+
+Estudamos uma via de sinalização observando a concentração de espécies
+químicas ao longo do tempo, o que pode ser feito através de experimentos
+biológicos ou com modelos computacionais. Modelos computacionais, também
+chamados de modelos funcionais, são definidos por equações diferenciais
+ordinárias que descrevem a variação da concentração de espécies químicas
+no tempo. Estes modelos são apenas capazes de simular o que pode ser 
+observado por experimentos biológicos e a vantagem dessa abordagem 
+consiste em, considerando que o modelo aproxima bem a realidade, prever 
+o estado da célula dado um estado inicial e uma porção de tempo.
+
+Entretanto, para desenhar modelos funcionais precisamos determinar 
+quais interações e espécies químicas participam da via de sinalização e,
+além disso, existem constantes desconhecidas que aparecem no sistema de 
+equações diferenciais das concentrações de espécies químicas. Para o 
+primeiro problema, podemos procurar por modelos da via de sinalização
+em bancos de dados de interatomas, como o Kyoto Encyclopedia of Genes 
+and Genomes (KEGG) \cite{Kanehisa2000kegg}. Já para o segundo problema, 
+podemos usar constantes disponíveis na literatura ou determinar valores
+fazendo o ajuste da curva (do inglês \emph{curve fitting}) de dados
+gerados pelo modelo funcional pelos dados coletados experimentalmente;
+uma opção de software capaz de fazer tal ajuste de curva é o SigNetSim 
+~\cite{Noel2017SigNetSim}.
+
 \begin{itemize}
 
 \item Enunciar o problema de identificação de vias de sinalização celular. Ilustrá-lo utilizando o exemplo do paper da Methods in Molecular Biology~\cite{Reis2017interdisciplinary}. Para isto monte uma figura com 4 subfiguras, mostrando a simulação do modelo inicial, e depois com o acréscimo de uma reação (os arquivos das subfiguras estão na pasta ``figures").
