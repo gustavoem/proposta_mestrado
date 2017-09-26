@@ -1,5 +1,5 @@
 .gitignore
-../documentos
+../documentos/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
