@@ -111,11 +111,11 @@ de tempo.
 
 \subsection{Identificação de vias de sinalização}
 O problema de desenhar modelos funcionais é chamado de identificação de
-vias de sinalização celular e esse problema apresenta duas dificuldades
-principais: a primeira é escolher as espécies químicas e interações que
-participam da via, e a segunda é determinar constantes que aparecem no
-sistema de equações diferenciais das concentrações de espécies químicas.
-Para a primeira dificuldade, podemos usar como base recortes de mapas de
+vias de sinalização celular e apresenta duas dificuldades principais: a 
+primeira é escolher as espécies químicas e interações que participam da 
+via, e a segunda é determinar constantes que aparecem no sistema de 
+equações diferenciais das concentrações de espécies químicas. Para a 
+primeira dificuldade, podemos usar como base recortes de mapas de 
 interatomas disponíveis em bancos de dados como o Kyoto Encyclopedia of 
 Genes and Genomes (KEGG) ~\cite{Kanehisa2000kegg}. Já para a segunda
 dificuldade, podemos usar constantes disponíveis na literatura ou 
@@ -160,7 +160,7 @@ químicas e interações de um modelo funcional.
     células carcinoma adrenocorticais Y1 de rato 
     ~\cite{Reis2017interdisciplinary}. As figuras 
     \ref{fig:example_reis_interdisciplinary:A} e 
-    \ref{fig:example_reis_interdisciplinary:C} representam 
+    \ref{fig:example_reis_interdisciplinary:B} representam 
     respectivamente o modelo funcional e um gráfico comparando dados da
     simulação e do experimento biológico. O gráfico mostra que a 
     simulação não se aproxima bem da realidade, o que é contornado por
@@ -168,7 +168,7 @@ químicas e interações de um modelo funcional.
     (em vermelho na figura \ref{fig:example_reis_interdisciplinary:B})
     . O modelo atualizado e os resultados da simulação são apresentados
     respectivamente nas figuras 
-    \ref{fig:example_reis_interdisciplinary:B} e
+    \ref{fig:example_reis_interdisciplinary:C} e
     \ref{fig:example_reis_interdisciplinary:D}} 
     \label{fig:example_reis_interdisciplinary} 
 \end{figure}
@@ -184,37 +184,36 @@ dados de interatomas}
 Com intuito de sistematizar a modificação de um modelo funcional, foi
 desenvolvido em uma tese de mestrado uma abordagem de identificação de
 vias de sinalização celular que aumenta recortes de mapas de interatomas
-com o objetivo de que o modelo represente corretamente os dados biológicos 
-~\cite{Wu2015metodo}. Esta abordagem modifica os modelos funcionais de 
-forma incremental, adicionando interações de um banco de dados, que foi 
-construído com a união de várias interações de diferentes mapas de 
-interatomas do KEGG.
+com o objetivo de que o modelo represente corretamente os dados 
+biológicos ~\cite{Wu2015metodo}. Esta abordagem modifica os modelos 
+funcionais de forma incremental, adicionando interações de um banco de 
+dados, que foi construído com a união de várias interações de diferentes 
+mapas de interatomas do KEGG.
 
 Mais formalmente, esta abordagem trata o problema de identificação de 
 vias de sinalização como um problema de otimização, em que o espaço de
 busca é constituído por todos os modelos que podem ser construídos a 
 partir do modelo original (incluindo ele mesmo), aumentado com
 interações do banco de dados usado. A função de custo é dada pelo erro
-do modelo no ajuste de curva dos dados biológicos, calculado pelo 
+do modelo no ajuste de curva pelos dados biológicos, calculado pelo 
 software SigNetSim; a busca pelo melhor elemento do espaço de busca é 
 feita usando o algoritmo de busca {\it Sequential Forward Selection} 
 (SFS).
 
 % TODO: descobrir outros bancos de mapas interatomas 
 
-Esta abordagem, entretanto, apresentou algumas limitações. A primeira é 
-a incompletude do banco de interações criado, que usava apenas mapas de 
-interatomas disponíveis no KEGG e, além disso, não considera constantes 
-de velocidade disponíveis em outros bancos de dados, como o 
-Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, 
-o que aumenta desnecessariamente a complexidade do modelo 
-funcional. A segunda limitação está no algoritmo de busca, que por ser
-incremental pode ``caminhar'' o modelo até um mínimo local, perdendo a 
-melhor solução. A terceira e última está na penalização de modelos mais 
-complexos, que era feita implicitamente ao impor um tempo de limite 
-no ajuste de curva do modelo, ignorando a velocidade de convergência do
-algoritmo para o modelo em questão, resultando em uma penalização 
-aleatória.
+Esta abordagem, entretanto, apresentou algumas limitações. A
+primeira é a incompletude do banco de interações criado, que usava 
+apenas mapas de interatomas disponíveis no KEGG e, além disso, não 
+considera constantes de velocidade disponíveis em outros bancos de 
+dados, como o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, o que aumenta 
+desnecessariamente a complexidade do modelo funcional. A segunda 
+limitação está no algoritmo de busca, que por ser incremental pode 
+``caminhar'' o modelo até um mínimo local, perdendo a melhor solução. A
+terceira limitação está na penalização de modelos mais complexos, que 
+era feita implicitamente ao impor um tempo de limite no ajuste de curva 
+do modelo, ignorando a velocidade de convergência do algoritmo para o 
+modelo em questão, resultando em uma penalização aleatória.
 
 %\begin{itemize}
 
