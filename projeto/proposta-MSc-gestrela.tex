@@ -16,7 +16,7 @@
 \usepackage{graphicx, subfigure} % add subfigures
 \usepackage{rotating}  % sideways figure
 \usepackage[verbose]{placeins} % avoids placing figures on last page
-
+\usepackage{fullpage}
     
 
 \title{Projeto MSc}
@@ -70,7 +70,7 @@ Laboratório Especial de Ciclo Celular (LECC)\\
   {\bf Supervisor:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}\\
   \bigskip
 Center of Toxins, Immune-response and Cell Signaling (CeTICS)\\
-Laboratório Especial de Toxinologia Aplicada (LETA)\\
+Laboratório Especial de Ciclo Celular (LECC)\\
   Instituto Butantan, São Paulo, \today.\\
   }
   \bigskip
@@ -87,141 +87,73 @@ Laboratório Especial de Toxinologia Aplicada (LETA)\\
 
 \section{Introdução}
 
-A sinalização celular é o processo de troca de informações que permite
-às células interagir com o ambiente por meio de interações entre
-espécies químicas. Chamamos um conjunto de interações desse tipo que 
-estão associadas a uma função celular de uma via de sinalização celular.
-A sinalização celular coordena diversos processos da célula e entender 
-a topologia de suas vias pode ajudar a melhorar o entendimento de 
-processos celulares assim como permitir criar novos tratamentos para 
-doenças como o câncer e diabetes, que podem ser causadas por anomalias 
-nestas vias.
+A sinalização celular é um processo de troca de informações que ocorre no interior de uma célula e em suas imediações por meio de interações entre espécies químicas. Um conjunto de interações que estão associadas a uma determinada transmissão de informação (e.g., um sinal que chega no núcleo celular a partir do acionamento de um receptor de membrana citoplasmática) é chamado de via de sinalização celular.
+Diversos processos celulares são coordenados por vias de sinalização celular; por exemplo, o ciclo celular pode ser estimulado a partir de uma sinalização mitogênica, que trafega por algumas dessas vias (e.g., pelas vias das \href{https://en.wikipedia.org/wiki/Mitogen-activated\_protein\_kinase}{MAP quinases}). Portanto, entender a topologia e a dinâmica dessas vias pode ajudar a melhorar o entendimento do funcionamento de diversos tipos de células. Ademais, uma vez que anomalias em vias de sinalização celular podem levar ao desenvolvimento de doenças tais como o câncer e o diabetes, desvendar propriedades de seus mecanismos é uma etapa inicial, porém altamente relevante, no desenvolvimento de novos tratamentos contra essas doenças.
 
-Estudamos uma via de sinalização observando a concentração de espécies
-químicas ao longo do tempo, o que pode ser feito através de experimentos
-biológicos ou com modelos computacionais. Estes modelos, também
-chamados de modelos funcionais, podem descrever a concentração de 
-espécies químicas ao longo do tempo por sistemas de equações 
-diferenciais, seguindo as regras definidas pela cinética de reações 
-bioquímicas. Os modelos funcionais são apenas capazes de simular o que 
-pode ser observado por experimentos biológicos e a vantagem dessa 
-abordagem consiste em, considerando que o modelo aproxima bem a 
-realidade, prever o estado da célula dado um estado inicial e uma porção
-de tempo.
+O estudo de uma via de sinalização é realizado através da observação, ao longo de uma determinada janela de tempo, da concentração de algumas das espécies químicas envolvidas no fenômeno. Dependendo do contexto, a via de sinalização pode ser estudada através da aplicação de testes estatísticos e de análises de correlações sobre resultados dos experimentos biológicos. Todavia, como geralmente é possível medir apenas alguns instantes de tempo de uma fração das espécies químicas envolvidas, faz-se necessário agregar nessas análises informações {\em a priori} vindas do conhecimento existente da cinética de reações bioquímicas, o que pode ser feito através de modelos dinâmicos computacionais. 
 
-\subsection{Identificação de vias de sinalização}
-O problema de desenhar modelos funcionais é chamado de identificação de
-vias de sinalização celular e apresenta duas dificuldades principais: a 
-primeira é escolher as espécies químicas e interações que participam da 
-via, e a segunda é determinar constantes que aparecem no sistema de 
-equações diferenciais das concentrações de espécies químicas. Para a 
-primeira dificuldade, podemos usar como base recortes de mapas de 
-interatomas disponíveis em bancos de dados como o Kyoto Encyclopedia of 
-Genes and Genomes (KEGG) ~\cite{Kanehisa2000kegg}. Já para a segunda
-dificuldade, podemos usar constantes disponíveis na literatura ou 
-determinar valores fazendo o ajuste da curva (do inglês \emph{curve 
-fitting}) de dados gerados pelo modelo funcional pelos dados coletados
-experimentalmente; uma opção de software capaz de fazer tal ajuste de
-curva é o SigNetSim ~\cite{Noel2017SigNetSim}.
+Um tipo particular de modelo dinâmico computacional, denominado modelo funcional, pode descrever a concentração de espécies químicas ao longo do tempo, através de algum formalismo matemático das regras definidas pela cinética de reações bioquímicas; por exemplo, empregando sistemas de equações diferenciais ordinárias (EDOs). Os modelos funcionais, quando corretamente definidos, são capazes de simular o que pode ser observado por experimentos biológicos. Além de incorporar às análises informações {\em a priori} relevantes, o uso desse tipo de modelo também traz a vantagem de ser uma abordagem \underline{preditiva}: considerando que o modelo desenhado aproxima bem a realidade e que não padece de {\em overfitting}, o mesmo pode prever a dinâmica da via de sinalização para diferentes estados (condições) iniciais. Isso pode ser utilizado, por exemplo, para testar o comportamento de uma via de sinalização celular de acordo com o tratamento dado às células.
 
-Determinar as espécies químicas e interações de um modelo a partir de um
-mapa de interatomas torna-se problemático quando o mapa é muito grande 
-ou quando é incompleto. A figura 
-\ref{fig:example_reis_interdisciplinary} mostra um caso de especificação
-de modelo funcional em que a escolha de um recorte de um mapa de 
-interatoma do banco de dados KEGG não foi suficiente para que o modelo 
-descrevesse corretamente os experimentos biológicos, o que foi 
-contornado por Reis et al. ao adicionar uma nova interação, que não 
-pertencia ao mapa usado como base ~\cite{Reis2017interdisciplinary}.
-Desta forma, torna-se necessário sistematizar a escolha de espécies 
-químicas e interações de um modelo funcional.
+Portanto, o desenho de modelos funcionais para o estudo de vias de sinalização celular é um problema relevante no contexto de Biologia Celular Molecular e de Biomedicina; uma definição desse problema, bem como métodos para abordá-lo, serão apresentados a seguir.
+
+\subsection{Identificação de vias de sinalização celular}
+O problema de desenhar modelos funcionais, que sejam capazes de explicar os resultados obtidos em experimentos biológicos e que ao mesmo tempo minimizem o problema de {\em overfitting}, é chamado de {\em problema de identificação de vias de sinalização celular}. Tipicamente, a resolução desse problema é realizada em duas etapas: na primeira delas, escolhemos as espécies químicas e interações que participam da via, definindo assim as EDOs que farão a descrição matemática da dinâmica do modelo ao longo de uma determinada janela de tempo. Já na segunda etapa, são determinados valores para as constantes de velocidade (i.e., os valores dos parâmetros do sistema de EDOs) e também para as concentrações iniciais (i.e., o estado inicial do modelo dinâmico); se não é possível encontrar valores adequados para os parâmetros, então é preciso voltar para a primeira etapa e redefinir as espécies químicas e/ou interações envolvidas.
+
+Para a resolução da primeira etapa, frequentemente recorre-se a interações entre espécies químicas listadas em bancos de dados de interatomas tais como o \href{http://www.genome.jp/kegg/}{Kyoto Encyclopedia of} \href{http://www.genome.jp/kegg/}{Genes and Genomes (KEGG)}~\cite{Kanehisa2000kegg}. KEGG e outros bancos de dados similares apresentam uma vasta coleção de interatomas (também conhecidos como mapas estáticos), catalogados por organismo, tipo de tecido, via de sinalização estudada, etc. Logo, o pesquisador normalmente recorre ao mapa cuja categoria mais se aproxime das condições de seu experimento biológico para selecionar as interações que comporão seu modelo funcional. Outra alternativa é recorrer a um modelo {\em scaffolding} para servir de base ao modelo funcional em desenvolvimento, para este fim recorrendo a bancos de dados de modelos; um exemplo desse tipo de banco de dados é o \href{https://www.ebi.ac.uk/biomodels-main/}{BioModels}~\cite{le2006biomodels}.
+
+Já para a segunda etapa, é possível utilizar constantes de velocidade disponíveis na literatura e/ou em bancos de dados tal como o \href{http://bionumbers.hms.harvard.edu/}{BioNumbers}~\cite{milo2009bionumbers}, que são determinadas através de experimentos biológicos (e.g., em \href{https://en.wikipedia.org/wiki/Enzyme\_assay}{ensaios enzimáticos}). Quando tais constantes não estão disponíveis, precisamos recorrer a um método conhecido como \href{https://en.wikipedia.org/wiki/Curve\_fitting}{otimização por ajuste de curva} (do inglês \emph{curve-fitting optimization}). Nesse tipo de otimização, para um dado conjunto de valores para os parâmetros do modelo funcional, uma simulação é realizada e seu resultado é comparado com os dados coletados experimentalmente, segundo uma dada medida de erro (i.e., a função custo); com a ajuda de um algoritmo de otimização, tal procedimento é realizado muitas vezes, até que algum critério de parada seja atingido (e.g., um limiar superior para o erro). Uma opção de ferramenta para a realização de otimização por ajuste de curva é o \href{https://github.com/vincent-noel/SigNetSim}{Signaling Network Simulator (SigNetSim)}~\cite{Noel2017SigNetSim}.
+
+Um exemplo de resolução do problema de identificação de vias de sinalização celular é mostrado na figura~\ref{fig:example_reis_interdisciplinary}, no qual é realizada uma primeira iteração da primeira e segunda etapas (figuras~\ref{fig:example_reis_interdisciplinary:A} e \ref{fig:example_reis_interdisciplinary:B}) que não foi capaz de explicar as medidas dos experimentos biológicos; dessa forma, foi realizada uma segunda iteração dessas duas etapas (figuras~\ref{fig:example_reis_interdisciplinary:C} e \ref{fig:example_reis_interdisciplinary:D}), com resultados muito mais satisfatórios.
 
 \begin{figure}[h]
-    \centering
+    \begin{tabular}{ll}
+        \centering
     \subfigure[] {
         \label{fig:example_reis_interdisciplinary:A}
-        \includegraphics[clip=true, width=0.5\textwidth]{Figure_3.pdf}
+        \includegraphics[trim = 0.5cm 0cm 0cm 0cm, clip=true, width=0.5\textwidth]{Figure_3.pdf}
     }
-
+    &
     \subfigure[] {
         \label{fig:example_reis_interdisciplinary:B}
-        \includegraphics[clip=true, width=0.5\textwidth]{Figure_5.png}
+        \includegraphics[trim = 0.5cm 0cm 0cm 0cm,clip=true, width=0.5\textwidth]{Figure_5.png}
     }
+    \\
     \subfigure[] {
         \label{fig:example_reis_interdisciplinary:C}
-        \includegraphics[clip=true, width=0.5\textwidth]{Figure_6.pdf}
+        \includegraphics[trim = 0.5cm 0cm 0cm 0cm, clip=true, width=0.5\textwidth]{Figure_6.pdf}
     }
+    &
     \subfigure[] {
         \label{fig:example_reis_interdisciplinary:D}
-        \includegraphics[clip=true, width=0.5\textwidth]{Figure_7.png}
+        \includegraphics[trim = 0.5cm 0cm 0cm 0cm,clip=true, width=0.5\textwidth]{Figure_7.png}
     }
-        
-    \caption{Exemplo de identificação da via de sinalização Ras/ERK em
-    células carcinoma adrenocorticais Y1 de rato 
-    ~\cite{Reis2017interdisciplinary}. As figuras 
-    \ref{fig:example_reis_interdisciplinary:A} e 
-    \ref{fig:example_reis_interdisciplinary:B} representam 
-    respectivamente o modelo funcional e um gráfico comparando dados da
-    simulação e do experimento biológico. O gráfico mostra que a 
-    simulação não se aproxima bem da realidade, o que é contornado por
-    Reis et al. adicionando uma nova interação no modelo funcional 
-    (em vermelho na figura \ref{fig:example_reis_interdisciplinary:B})
-    . O modelo atualizado e os resultados da simulação são apresentados
-    respectivamente nas figuras 
-    \ref{fig:example_reis_interdisciplinary:C} e
-    \ref{fig:example_reis_interdisciplinary:D}} 
+    \end{tabular}   
+    \caption{Exemplo de identificação da via de sinalização Ras/ERK em células murinas de carcinoma adrenocortical Y1, conforme apresentado em Reis e colegas~\cite{Reis2017interdisciplinary}. As figuras~\ref{fig:example_reis_interdisciplinary:A} e~\ref{fig:example_reis_interdisciplinary:B} representam, respectivamente, uma hipótese inicial para o modelo funcional e dois gráficos comparando dados da simulação desse modelo com as medidas obtidas no experimento biológico, mostrando que a simulação com esse modelo não se aproxima bem dos valores medidos. Isso foi contornado adicionando uma nova reação bioquímica no modelo funcional (em vermelho na figura \ref{fig:example_reis_interdisciplinary:C}); a simulação do modelo atualizado resultou em uma cinética que explica os resultados experimentais (figura \ref{fig:example_reis_interdisciplinary:D}).}
     \label{fig:example_reis_interdisciplinary} 
 \end{figure}
-\FloatBarrier
 
-% 3 limitações
-% penalização
-% completude
-% apenas incremental
+% 4 limitações:
+%
+% i)   Etapa 1: uso de bancos incompletos
+%
+% ii)  Etapa 2: não usa info a priori de parâmetros
+%
+% iii) Algoritmo: apenas incremental
+%
+% iv)  Função custo: penalização inadequada de overfitting
+
+% As 4 limitações são tratadas nos 4 subitens dos desafios científicos!
+
 
 \subsection{Modificação de modelos funcionais a partir de bancos de 
 dados de interatomas}
-Com intuito de sistematizar a modificação de um modelo funcional, foi
-desenvolvido em uma tese de mestrado uma abordagem de identificação de
-vias de sinalização celular que aumenta recortes de mapas de interatomas
-com o objetivo de que o modelo represente corretamente os dados 
-biológicos ~\cite{Wu2015metodo}. Esta abordagem modifica os modelos 
-funcionais de forma incremental, adicionando interações de um banco de 
-dados, que foi construído com a união de várias interações de diferentes 
-mapas de interatomas do KEGG.
 
-Mais formalmente, esta abordagem trata o problema de identificação de 
-vias de sinalização como um problema de otimização, em que o espaço de
-busca é constituído por todos os modelos que podem ser construídos a 
-partir do modelo original (incluindo ele mesmo), aumentado com
-interações do banco de dados usado. A função de custo é dada pelo erro
-do modelo no ajuste de curva pelos dados biológicos, calculado pelo 
-software SigNetSim; a busca pelo melhor elemento do espaço de busca é 
-feita usando o algoritmo de busca {\it Sequential Forward Selection} 
-(SFS).
+No exemplo de identificação de vias de sinalização celular mostrado na figura~\ref{fig:example_reis_interdisciplinary}, como a via em questão tratava-se da \href{https://en.wikipedia.org/wiki/MAPK/ERK\_pathway}{clássica Ras/ERK}, não foi difícil localizar na literatura uma reação bioquímica suficiente para completar o modelo funcional. Todavia, em casos em que a via de sinalização celular é pouco ou nada estudada, não é possível recorrer à literatura para buscar espécies e/ou reações químicas para completar o modelo. Neste caso, uma alternativa seria recorrer a mapas estáticos contidos em bancos de dados de interatomas para buscar espécies e/ou reações químicas candidatas a completar o modelo funcional. Todavia, esta estratégia pode tornar-se problemática quando o mapa é muito grande e/ou quando o mesmo é incompleto. 
 
-% TODO: descobrir outros bancos de mapas interatomas 
+Com intuito de sistematizar a modificação de um modelo funcional, Lulu Wu introduziu em 2015, em \href{http://www.teses.usp.br/teses/disponiveis/45/45134/tde-22082015-085947/pt-br.php}{sua dissertação de mestrado pelo IME-USP}, uma abordagem de identificação de
+vias de sinalização celular com o auxílio do banco de dados de interatomas KEGG~\cite{Wu2015metodo}. Nessa abordagem, todos os mapas estáticos presentes no KEGG que eram referentes a vias de sinalização celular de um dado organismo foram coletados e organizados em um grafo, resultado da união de todos esses mapas. Além disso, durante a primeira etapa da resolução do problema de identificação de vias de sinalização celular, a modificação de um modelo funcional era realizada de forma incremental, adicionando interações presentes nesse grafo; posteriormente, a segunda etapa era realizada utilizando a ferramenta SigNetSim para otimização de ajuste de curva. Em outras palavras, podemos dizer que tal abordagem trata o problema como um problema de otimização, no qual o espaço de busca é constituído por todos os modelos que podem ser construídos a  partir do modelo original (incluindo ele mesmo), aumentado com interações presentes no grafo. A função de custo é dada pelo erro do modelo no ajuste da curva simulada comparada com os dados biológicos, e é calculado pela ferramenta SigNetSim; a busca pelo melhor elemento do espaço de busca é feita usando o algoritmo de busca {\it Sequential Forward Selection} (SFS)~\cite{Whitney:1971}.
 
-Esta abordagem, entretanto, apresentou algumas limitações. A
-primeira é a incompletude do banco de interações criado, que usava 
-apenas mapas de interatomas disponíveis no KEGG e, além disso, não 
-considera constantes de velocidade disponíveis em outros bancos de 
-dados, como o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, o que aumenta 
-desnecessariamente a complexidade do modelo funcional. A segunda 
-limitação está no algoritmo de busca, que por ser incremental pode 
-``caminhar'' o modelo até um mínimo local, perdendo a melhor solução. A
-terceira limitação está na penalização de modelos mais complexos, que 
-era feita implicitamente ao impor um tempo de limite no ajuste de curva 
-do modelo, ignorando a velocidade de convergência do algoritmo para o 
-modelo em questão, resultando em uma penalização aleatória.
-
-%\begin{itemize}
-
-%\item Enunciar o problema de identificação de vias de sinalização celular. Ilustrá-lo utilizando o exemplo do paper da Methods in Molecular Biology~\cite{Reis2017interdisciplinary}. Para isto monte uma figura com 4 subfiguras, mostrando a simulação do modelo inicial, e depois com o acréscimo de uma reação (os arquivos das subfiguras estão na pasta ``figures").
-
-%\item Explicar, de forma concisa, a abordagem da Lulu para tentar resolver o problema~\cite{Wu2015metodo}, que envolve o uso do repositório de interatomas KEGG~\cite{Kanehisa2000kegg}. Citar limitações dessa abordagem, como por exemplo o uso do SFS como função custo para fazer a seleção de modelos~\cite{Whitney:1971}.
-
-%\end{itemize}
+Esta abordagem, entretanto, apresentou algumas limitações. A primeira delas é a incompletude do banco de interações criado, que usava apenas mapas de interatomas disponíveis no KEGG, não considerando informações complementares que poderiam ser extraídas de bancos de dados bem mais abrangentes para este fim, como por exemplo o \href{https://string-db.org/}{STRING}~\cite{szklarczyk2010string}. Além disso, a metodologia não considerou as constantes de velocidade que encontram-se disponíveis em bancos de dados de cinética de reações bioquímicas (e.g., o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}); não utilizar constantes de velocidades que já tenham sido determinadas experimentalmente aumenta de forma considerável a dificuldade da otimização por ajuste de curva, além de elevar o risco de {\em overfitting} do modelo funcional produzido. A terceira limitação está no algoritmo de busca, que por ser incremental pode ``caminhar'' o modelo até um mínimo local, perdendo assim a melhor solução. Por fim, uma última limitação está na penalização de {\em overfitting} para modelos mais complexos, que era feita implicitamente ao impor um tempo de limite no ajuste de curva do modelo, ignorando a velocidade de convergência do algoritmo para o modelo em questão, resultando em uma penalização aleatória.
 
 %------------------------------------------------------------------------------%
 
@@ -252,7 +184,7 @@ modelo em questão, resultando em uma penalização aleatória.
   \item Escolher um algoritmo de seleção de características. Critérios que penalizam {\em overfitting} provavelmente induzirão curvas em U nas cadeias do reticulado Booleano induzido pelo espaço de busca, o que nos permitirá aproximar o problema de seleção de características através do problema de otimização U-curve. Como o cálculo da função custo provavelmente será computacionalmente muito intensivo, o melhor algoritmo para esse fim tende a ser o U-Curve-Search (UCS)~\cite{reis2012minimizaccao,reis2017ucsr}.
 \end{itemize}
 
-\item Contornar o problema da incompletude dos bancos de dados de interatomas (e.g., KEGG), que se dá no nível de estrutura da via de sinalização e também na ausência de constantes de velocidade.
+\item Contornar o problema da incompletude dos bancos de dados de interatomas (e.g., KEGG), que se dá no nível de estrutura da via de sinalização, assim como tratar a ausência de constantes de velocidade.
   \begin{itemize}
      \item{\bf Estrutura da via de sinalização.} \href{http://www.genome.jp/kegg-bin/show\_pathway?mmu04014}{no mapa da via de sinalização de Ras em camundongo}, existe uma aresta dizendo que Raf1 ativa MEK, mas não como se dá tal ativação. Por exemplo, no modelo apresentado na introdução, MEK é ativado após ser fosforilado duas vezes pela forma ativa de Raf1, dinâmica que exige duas equações para ser descrita em termos de cinética química. Para lidar com este problema, precisaremos estabelecer a lei cinética (tipo de reação) a ser utilizada de acordo com a natureza das espécies químicas envolvidas em uma dada interação. No exemplo dado, sabe-se que a ativação de MEK por Raf é ultrassensível, e que portanto pode ser modelada utilizando a equação de Hill~\cite{huang1996ultrasensitivity}.
      \item{\bf Ausência de constantes de velocidade.} Dificulta tanto a estimação quanto o problema de otimização. Vamos contornar isso coletando e organizando informações extraídas de repositórios tais como o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, Brenda~\cite{doi:10.1093/nar/gkh081}, BioNumbers~\cite{milo2009bionumbers}, e possivelmente também  BioModels~\cite{le2006biomodels}. 
