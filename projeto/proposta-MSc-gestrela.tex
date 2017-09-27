@@ -210,11 +210,254 @@ Resultados iniciais com essa metodologia mostraram que limitações como as desc
 
 \section{Plano de trabalho e cronograma de execução}
 
-{\color{blue}[Tente detalhar os trabalhos que serão necessários, dados os objetivos e desafios metodológicos.]}
+A primeira etapa deste trabalho consiste em construir um banco de dados
+para armazenar interações entre espécies químicas e suas 
+características. Começaremos a construção deste banco extraindo
+interações de mapas estáticos disponíveis em bancos como KEGG, etc; em
+seguida, devemos usar outros bancos de dados como BioNumbers para 
+extrair valores de constantes de velocidade para as interações 
+recolhidas. Também devemos mapear interações a modelos de cinética 
+química adequados de acordo com a natureza dessas interações. Por fim,
+o banco criado deverá ser integrado ao CeTICSdb.
 
+Após construído o banco de dados, iremos integrar o SigNetSim ao 
+arcabouço featsel, que será usado para implementação de novos algoritmos
+de busca e funções de custo para o problema de identificação de vias 
+de sinalização celular. Além disso, reimplementaremos e/ou refatoraremos 
+o código legado de Lulu Wu, usando desta vez o arcabouço featsel para 
+seleção de modelos. Ao final desta etapa, devemos ser capazes
+de repetir os experimentos de Lulu Wu a fim de verificar as melhorias na
+abordagem ao minimizar a incompletude do banco de dados. Também devemos
+criar novos experimentos parecidos com os últimos, com o intuito de 
+comparar as metodologias criadas no decorrer do projeto.
+
+Em seguida, devemos estudar ao menos duas métricas diferentes para 
+avaliar a qualidade de modelos funcionais penalizando a complexidade 
+dos mesmos. A primeira métrica deve se basear no critério de informação 
+de Akaike, enquanto a segunda usa uma abordagem Bayesiana para avaliar 
+os modelos propostos. Ambas abordagens serão devidamente modificadas 
+para serem implementadas no arcabouço featsel, para avaliar modelos 
+funcionais. As duas metodologias geradas nesta etapa devem ser 
+avaliadas na identificação de vias de sinalização celular já bem 
+conhecidas, assim como foi feito por Lulu Wu.
+
+As novas funções de custo criadas penalizam a complexidade dos modelos, 
+portanto estas funções devem descrever uma curva em U nas cadeias de 
+modelos funcionais do espaço de busca. Desta forma, criaremos novos
+algoritmos de busca que explorem essa característica da função de custo.
+Assim como as novas funções de custo, os novos algoritmos de busca serão
+implementados no arcabouço featsel, e as novas metodologias avaliadas
+na identificação de vias de sinalização.
+
+Por fim, esperamos ter elaborado uma nova metodologia que tenha superado
+os limites apresentados no trabalho de Lulu Wu e então, aplicaremos a 
+nova abordagem na identificação de vias da linhagem tumoral murina Y1.
+
+\subsection{Descrição de atividades}
+\begin{itemize}
+    \item{\bf Atividade 1.} Estudo da estrutura dos bancos dados de 
+        interatomas como o KEGG e STRING
+    \item{\bf Atividade 2.} Criação de um banco de dados relacional que
+        seja capaz de armazenar interações retiradas dos bancos de dados
+        de interatomas.
+    \item{\bf Atividade 3.} Estudo da estrutura de bancos de dados de 
+        cinética química como o SABIO-RK, Brenda, etc.
+    \item{\bf Atividade 4.} Reestruturação do banco de dados de 
+        interações para armazenar também contantes de velocidade.
+    \item{\bf Atividade 5.} Estabelecer leis de cinética adequadas
+        de acordo com a natureza das espécies químicas envolvidas em uma
+        interação.
+    \item{\bf Atividade 6.} Reestruturação do banco de dados de 
+        interações para suportar o armazenamento de tipo de interação.
+    \item{\bf Atividade 7.} Integração do banco de dados de interações
+        criado ao CeTICSdb.
+    \item{\bf Atividade 8.} Integração do arcabouço featsel ao 
+        SigNetSim.
+    \item{\bf Atividade 9.} Implementar e/ou refatorar a metodologia de 
+        Lulu com a devida integração de featsel e SigNetSim.
+    \item{\bf Atividade 10.} Testes da metodologia refatorada com vias
+        de sinalização já bem modeladas e avaliação dos modelos gerados.
+    \item{\bf Atividade 11.} Estudo do critério de informação AIC.
+    \item{\bf Atividade 12.} Implementação de uma nova função de custo
+        no arcabouço featsel para os modelos funcionais, baseada no 
+        critério de informação AIC
+    \item{\bf Atividade 13.} Testes em vias de sinalização já bem 
+        modeladas e avaliação dos modelos gerados usando nova função de
+        custo.
+    \item{\bf Atividade 14.} Estudo de funções de custo com abordagem
+        Bayesiana para seleção de modelos.
+    \item{\bf Atividade 15.} Implementação de uma nova função de custo 
+        no arcabouço featsel para modelos funcionais que faz uma 
+        avaliação Bayesiana dos modelos.
+    \item{\bf Atividade 16.} Testes em vias de sinalização já bem
+        modeladas e avaliação dos modelos gerados usando nova função de
+        custo.
+    \item{\bf Atividade 17.} Implementação de novos algoritmos de busca
+        para o problema de seleção de modelos funcionais no arcabouço
+        featsel.
+    \item{\bf Atividade 18.} Testes em vias de sinalização já bem
+        modeladas e avaliação dos modelos gerados usando novo algoritmo
+        de busca.
+    \item{\bf Atividade 19.} Aplicação da metodologia na identificação de vias de sinalização celular da linnhagem tumoral murina Y1.
+
+\end{itemize}
 \subsection{Cronograma proposto}
 
-{\color{blue}[Tabela análoga ao dos projetos anteriores.]}
+\begin{table}[!ht]
+\caption{cronograma de atividades previstas nesta proposta de projeto.} 
+\label{tab:cronograma}
+\begin{center}
+\smallskip
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{l ccc ccc ccc ccc}
+    \toprule
+    \small Atividade/mês & \small Jan.18 & \small Fev.18 & \small Mar.18
+                         & \small Abr.18 & \small Mai.18 & \small Jun.18
+                         & \small Jul.18 & \small Ago.18 & \small Set.18
+                         & \small Out.18 & \small Nov.18 & \small Dez.18
+    \\ \hline
+
+    \small Atividade 1   
+    & \small {\bf x} & \small - & \small - & \small - 
+    & \small - & \small - & \small - & \small - 
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 2   
+    & \small - & \small {\bf x} & \small {\bf x} & \small - 
+    & \small - & \small - & \small - & \small - 
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 3   
+    & \small - & \small - & \small {\bf x} & \small -
+    & \small - & \small - & \small - & \small - 
+    & \small - & \small - & \small - & \small - \\
+
+    \small Atividade 4
+    & \small - & \small - & \small - & \small {\bf x}
+    & \small {\bf x} & \small - & \small - & \small - 
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 5   
+    & \small - & \small - & \small - & \small -  
+    & \small {\bf x} & \small {\bf x} & \small - & \small - 
+    & \small - & \small - & \small - & \small - \\ 
+
+
+    \small Atividade 6   
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small {\bf x} & \small {\bf x} & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+
+    \small Atividade 7
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small {\bf x} & \small {\bf x}
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 8  
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small {\bf x}
+    & \small {\bf x} & \small {\bf x} & \small - & \small - \\ 
+
+
+    \small Atividade 9
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small - \\ 
+    
+    
+    \small Atividade 10
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small {\bf x} \\ 
+    
+    \small Primeiro Relatório
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
+
+
+
+    \bottomrule
+    \toprule
+    \small Atividade/mês & \small Jan.19 & \small Fev.19 & \small Mar.19
+                         & \small Abr.19 & \small Mai.19 & \small Jun.19
+                         & \small Jul.19 & \small Ago.19 & \small Set.19
+                         & \small Out.19 & \small Nov.19 & \small Dez.19
+
+    \\ \hline
+    
+    \small Atividade 10
+    & \small {\bf x} & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+
+    \small Atividade 11 
+    & \small {\bf x} & \small {\bf x} & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small - \\ 
+    
+    
+    \small Atividade 12
+    & \small - & \small {\bf x} & \small {\bf x} & -
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 13
+    & \small - & \small - & \small - & \small {\bf x}
+    & \small {\bf x} & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 14
+    & \small - & \small - & \small - & \small -  
+    & \small {\bf x} & \small - & \small - & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+
+    \small Atividade 15
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small {\bf x} & \small {\bf x} & \small -
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 16
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small {\bf x}
+    & \small - & \small - & \small - & \small - \\ 
+
+    \small Atividade 17
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small {\bf x} & \small {\bf x}
+    & \small {\bf x} & \small - & \small - & \small - \\ 
+
+    \small Atividade 18
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small {\bf x} & \small - & \small - \\ 
+
+
+    \small Atividade 19
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
+
+
+
+    \small Segundo Relatório
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
+
+
+    \bottomrule
+
+
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+
 
 %------------------------------------------------------------------------------%
 
