@@ -39,22 +39,39 @@
 \begin{flushright}
     {\LARGE Identificação de vias de sinalização celular baseada em repositórios de cinética de reações bioquímicas}
 
-  \bigskip
-  \bigskip
-        
   {\large {\bf Bolsista:} \href{mailto:gustavo.estrela.matos@usp.br}{Gustavo Estrela de Matos}\\ 
-  {\bf Orientador:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}\\
-  \bigskip
-Centro de Toxinas, Imuno-resposta e Sinalização Celular (CeTICS)\\
-Laboratório Especial de Ciclo Celular (LECC)\\
+    {\bf Orientador:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}}\\
+  {\small Centro de Toxinas, Imuno-resposta e Sinalização Celular (CeTICS)\\
+     Laboratório Especial de Ciclo Celular (LECC)}\\
   Instituto Butantan, São Paulo, \today.\\
-  }
 
-  \bigskip
-  \bigskip
 \end{flushright}
 \begin{abstract}
-{\color{blue}[A fazer (máximo 20 linhas).]}
+    
+A construção de modelos funcionais é uma técnica comum para se 
+estudar vias de sinalização celular e, quando a via estudada é pouco
+conhecida, é possível que os modelos já propostos sejam incompletos, 
+tornando necessário a sua modificação.
+Lulu Wu apresentou em 2015, em sua dissertação de mestrado, um método 
+para  modificar sistematicamente modelos funcionais, adicionando a estes
+interações extraídas de repositórios como KEGG. Entretanto, esta 
+metodologia apresentou limitações: a primeira é a incompletude do banco 
+de dados de interações criado, que extraia informações apenas do 
+repositório KEGG; a segunda, a falta de informações sobre constantes 
+de velocidade de interações, que podem ser extraídas de repositórios 
+como BioNumbers; a terceira, a dinâmica do algoritmo de busca, 
+incremental, que pode não achar o mínimo global; e a última, a 
+penalização na complexidade dos modelos, que era feita de maneira 
+aleatória. Propomos neste trabalho enfrentar as limitações encontradas
+pela metodologia de Lulu, criando um banco de dados de interações mais
+completo e também novas funções de custo que sejam capazes de 
+penalizar modelos mais complexos (como critério de informação Akaike e 
+{\em Bayesian inference-based modeling}); esta penalização deve induzir,
+em cadeias do  espaço de busca, curvas em u no custo dos modelos, 
+portanto também propomos a criação de novos algoritmos de busca que 
+explorem essa característica da função de custo. Por fim, esperamos 
+testar nossa metodologia na identificação de vias de sinalização celular 
+da linhagem tumoral murina Y1.
 \end{abstract}
 
 \newpage
@@ -63,21 +80,35 @@ Laboratório Especial de Ciclo Celular (LECC)\\
 \begin{flushright}
     {\LARGE Identification of cell signaling pathways based on biochemical reaction kinetics repositories}
 
-  \bigskip
-  \bigskip
-        
-  {\large {\bf Student:} \href{mailto:gustavo.estrela.matos@usp.br}{Gustavo Estrela de Matos}\\ 
-  {\bf Supervisor:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}\\
-  \bigskip
-Center of Toxins, Immune-response and Cell Signaling (CeTICS)\\
-Laboratório Especial de Ciclo Celular (LECC)\\
+    {\large {\bf Student:} \href{mailto:gustavo.estrela.matos@usp.br}{Gustavo Estrela de Matos}\\ 
+    {\bf Supervisor:} \href{mailto:marcelo.reis@butantan.gov.br}{Marcelo da Silva Reis}}\\
+    {\small Center of Toxins, Immune-response and Cell Signaling (CeTICS)\\
+    Laboratório Especial de Ciclo Celular (LECC)}\\
   Instituto Butantan, São Paulo, \today.\\
-  }
-  \bigskip
-  \bigskip
 \end{flushright}
 \begin{abstract}
-{\color{blue}[To do (20 lines maximum).]}
+It is usual to create computational models to study cell signaling 
+pathways and, when this pathway is not well known, it's possible that 
+currently proposed models are incomplete, making it necessary to make 
+modifications on the model. Lulu Wu presented in 2015, on her master's 
+dissertation, a method for systematically modifying models, adding to 
+them interactions extracted from repositories such as KEGG. However, 
+this method showed some limitations: the first is the interactions
+database incompleteness, which extracted informations from KEGG database
+only; the second, the lack of information about interactions rate 
+constants, what could be gathered from repositories such as BioNumbers; 
+the third, the dynamics of the search algorithm, incremental, that might 
+not find the global minimum; and finally, the cost function penalization 
+on model complexity, which was aleatory. We propose on this project to 
+confront the limitations presented on Lulu's methodology, creating a
+more complete interaction database and also new cost functions that are 
+able to penalize more complex models (such as the Akaike information
+criteria and Bayesian inference-based modeling); this penalization is 
+likely to induce, on chains of the search space, u shaped curves on 
+model costs, therefore we also propose new search algorithms that 
+explore this feature of the cost function. Finally, we expect to use our
+methodology on identification of cell signaling pathways of the murina 
+Y1 tumoral cell line.
 \end{abstract}
 
 \newpage
