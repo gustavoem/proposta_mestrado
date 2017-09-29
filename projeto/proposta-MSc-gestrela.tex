@@ -17,7 +17,10 @@
 \usepackage{rotating}  % sideways figure
 \usepackage[verbose]{placeins} % avoids placing figures on last page
 \usepackage{fullpage}
-    
+
+\mathchardef\myhyphen="2D  % define hyphenation in math mode
+                          % (useful for enzyme--substrate complex notation)
+
 
 \title{Projeto MSc}
 
@@ -132,7 +135,7 @@ O problema de desenhar modelos funcionais, que sejam capazes de explicar os resu
 
 Para a resolução da primeira etapa, frequentemente recorre-se a interações entre espécies químicas listadas em bancos de dados de interatomas tais como o \href{http://www.genome.jp/kegg/}{Kyoto Encyclopedia of} \href{http://www.genome.jp/kegg/}{Genes and Genomes (KEGG)}~\cite{Kanehisa2000kegg}. KEGG e outros bancos de dados similares apresentam uma vasta coleção de interatomas (também conhecidos como mapas estáticos), catalogados por organismo, tipo de tecido, via de sinalização estudada, etc. Logo, o pesquisador normalmente recorre ao mapa cuja categoria mais se aproxime das condições de seu experimento biológico para selecionar as interações que comporão seu modelo funcional. Outra alternativa é recorrer a um modelo {\em scaffolding} para servir de base ao modelo funcional em desenvolvimento, para este fim recorrendo a bancos de dados de modelos; um exemplo desse tipo de banco de dados é o \href{https://www.ebi.ac.uk/biomodels-main/}{BioModels}~\cite{le2006biomodels}.
 
-Já para a segunda etapa, é possível utilizar constantes de velocidade disponíveis na literatura e/ou em bancos de dados tal como o \href{http://bionumbers.hms.harvard.edu/}{BioNumbers}~\cite{milo2009bionumbers}, que são determinadas através de experimentos biológicos (e.g., em \href{https://en.wikipedia.org/wiki/Enzyme\_assay}{ensaios enzimáticos}). Quando tais constantes não estão disponíveis, precisamos recorrer a um método conhecido como \href{https://en.wikipedia.org/wiki/Curve\_fitting}{otimização por ajuste de curva} (do inglês \emph{curve-fitting optimization}). Nesse tipo de otimização, para um dado conjunto de valores para os parâmetros do modelo funcional, uma simulação é realizada e seu resultado é comparado com os dados coletados experimentalmente, segundo uma dada medida de erro (i.e., a função custo); com a ajuda de um algoritmo de otimização, tal procedimento é realizado muitas vezes, até que algum critério de parada seja atingido (e.g., um limiar superior para o erro). Uma opção de ferramenta para a realização de otimização por ajuste de curva é o \href{https://github.com/vincent-noel/SigNetSim}{Signaling Network Simulator (SigNetSim)}~\cite{Noel2017SigNetSim}.
+Já para a segunda etapa, é possível utilizar constantes de velocidade disponíveis na literatura e/ou em bancos de dados tal como o \href{http://bionumbers.hms.harvard.edu/}{BioNumbers}~\cite{milo2009bionumbers}, que são determinadas através de experimentos biológicos (e.g., em \href{https://en.wikipedia.org/wiki/Enzyme\_assay}{ensaios enzimáticos}). Quando tais constantes não estão disponíveis, precisamos recorrer a um método conhecido como \href{https://en.wikipedia.org/wiki/Curve\_fitting}{otimização por ajuste de curva} (do inglês \emph{curve-fitting optimization}). Nesse tipo de otimização, para um dado conjunto de valores para os parâmetros do modelo funcional, uma simulação é realizada e seu resultado é comparado com os dados coletados experimentalmente, segundo uma dada medida de erro (i.e., a função custo); com a ajuda de um algoritmo de otimização, tal procedimento é realizado muitas vezes, até que algum critério de parada seja atingido (e.g., um limiar superior para o erro). Uma opção de ferramenta para a realização de otimização por ajuste de curva é o \href{https://github.com/vincent-noel/SigNetSim}{Signaling Network Simulator (SigNetSim)}.
 
 Um exemplo de resolução do problema de identificação de vias de sinalização celular é mostrado na figura~\ref{fig:example_reis_interdisciplinary}, no qual é realizada uma primeira iteração da primeira e segunda etapas (figuras~\ref{fig:example_reis_interdisciplinary:A} e \ref{fig:example_reis_interdisciplinary:B}) que não foi capaz de explicar as medidas dos experimentos biológicos; dessa forma, foi realizada uma segunda iteração dessas duas etapas (figuras~\ref{fig:example_reis_interdisciplinary:C} e \ref{fig:example_reis_interdisciplinary:D}), com resultados muito mais satisfatórios.
 
@@ -186,7 +189,7 @@ vias de sinalização celular com o auxílio do banco de dados de interatomas KE
 
 Esta abordagem, entretanto, apresentou algumas limitações. A primeira delas é a incompletude do grafo de interações criado, que usava apenas mapas de interatomas disponíveis no KEGG, não considerando informações complementares que poderiam ser extraídas de bancos de dados bem mais abrangentes para este fim, como por exemplo o \href{https://string-db.org/}{STRING}~\cite{szklarczyk2010string}. Além disso, a metodologia não considerou as constantes de velocidade que encontram-se disponíveis em bancos de dados de cinética de reações bioquímicas (e.g., o SABIO-RK~\cite{doi:10.1093/nar/gkr1046}); não utilizar constantes de velocidades que já tenham sido determinadas experimentalmente aumenta de forma considerável a dificuldade da otimização por ajuste de curva, além de elevar o risco de {\em overfitting} do modelo funcional produzido. A terceira limitação está no algoritmo de busca, que por ser incremental pode ``caminhar'' o modelo até um mínimo local, perdendo assim a melhor solução. Por fim, uma última limitação está na penalização de {\em overfitting} para modelos mais complexos, que era feita implicitamente ao impor um tempo de limite no ajuste de curva do modelo, ignorando a velocidade de convergência do algoritmo para o modelo em questão, resultando em uma penalização aleatória.
 
-Resultados iniciais com essa metodologia mostraram que limitações como as descritas anteriormente comprometeram a capacidade de recuperação das interações do estudo de caso considerado, o modelo funcional de Ras/ERK de Bianconi e colegas~\cite{Wu2015metodo,bianconi2012computational}. Portanto, é necessário mitigar as limitações aqui apresentadas para que seja possível abordar de forma mais efetiva o problema de identificação de vias de sinalização celular.
+Resultados iniciais com essa metodologia mostraram que limitações como as descritas anteriormente comprometeram a capacidade de recuperação das interações do estudo de caso considerado, o modelo funcional de Ras/ERK de Bianconi e colegas~\cite{Wu2015metodo,bianconi2012computational}. Portanto, é necessário mitigar as dificuldades aqui apresentadas para que seja possível abordar de forma mais efetiva o problema de identificação de vias de sinalização celular.
 
 %------------------------------------------------------------------------------%
 
@@ -194,9 +197,9 @@ Resultados iniciais com essa metodologia mostraram que limitações como as desc
 
 \begin{itemize}
 
-\item \underline{Geral:} desenvolver uma abordagem mais efetiva para auxiliar na identificação de vias de sinalização celular. Esta abordagem teria como ponto de partida o trabalho da Lulu e incluiria soluções para as limitações do mesmo, que foram discutidas na seção anterior.
+\item \underline{Geral:} desenvolver um método sistemático mais efetivo para auxiliar na identificação de vias de sinalização celular. Esta abordagem teria como ponto de partida a metodologia introduzida em 2015 por Lulu Wu em sua dissertação de mestrado, e incluiria soluções para as quatro principais limitações que foram discutidas na seção anterior.
 
-\item \underline{Específico:} aplicar a metodologia na identificação de vias de sinalização celular relevantes em nosso estudo de caso, a linhagem tumoral murina Y1.
+\item \underline{Específico:} aplicar a metodologia na identificação de vias de sinalização celular em nosso estudo de caso, a linhagem tumoral murina Y1, modelo biológico relevante em uma das linhas de pesquisa do CEPID \href{http://cetics.butantan.gov.br/}{Centro de Toxinas, Imuno-resposta e Sinalização Celular (CeTICS)}. Estamos particularmente interessados na identificação de vias de sinalização que tenham algum papel na modulação do fenótipo celular em resposta a \href{https://en.wikipedia.org/wiki/Basic\_fibroblast\_growth\_factor}{fator de crescimento de fibroblasto 2} e a outros estímulos.
 
 \end{itemize}
 
@@ -204,212 +207,153 @@ Resultados iniciais com essa metodologia mostraram que limitações como as desc
 
 \section{Metodologia}
 
-
+Para cumprir os objetivos geral e específico propostos neste projeto, será necessário atacar tanto desafios científicos quanto tecnológicos, que serão detalhados a seguir.
 
 \subsection{Desafios científicos}
 
-\begin{enumerate}
+Os principais desafios científicos deste projeto consistem no desenvolvimento de soluções para superar as quatro limitações da metodologia apresentada na introdução. Tais limitações podem ser classificadas em dois tipos: insuficiência de informações {\em a priori} biológicas utilizadas e restrições na estratégia adotada para a seleção de modelos.
 
-\item Realizar a seleção de modelos utilizando uma estratégia global ao invés de incremental. Para este fim, faremos a redução do problema da seleção de modelos para um problema de seleção de características, o que exigirá:
-\begin{itemize}
-  \item Definir uma função custo apropriada, que leve em consideração a penalização por {\em overfitting} decorrente do acréscimo de novas espécies químicas e/ou reações sem a inclusão de novas medidas experimentais para ajustar o modelo aumentado. Uma possibilidade seria o uso do critério de informação de Akaike ({\em Akaike's Information Criterion} -- AIC)~\cite{bozdogan1987model}, cujo princípio foi aplicado com sucesso em seleção de modelos no contexto de discriminação de classes de redes biológicas~\cite{takahashi2012discriminating}. Também investigaremos para este fim o uso de abordagens Bayesianas~\cite{kirk2013model}, como por exemplo a técnica conhecida como {\em Bayesian inference-based modeling} (BIBm)~\cite{Xu2010}.
 
-  \item Escolher um algoritmo de seleção de características. Critérios que penalizam {\em overfitting} provavelmente induzirão curvas em U nas cadeias do reticulado Booleano induzido pelo espaço de busca, o que nos permitirá aproximar o problema de seleção de características através do problema de otimização U-curve. Como o cálculo da função custo provavelmente será computacionalmente muito intensivo, o melhor algoritmo para esse fim tende a ser o U-Curve-Search (UCS)~\cite{reis2012minimizaccao,reis2017ucsr}.
-\end{itemize}
+\subsubsection{Coleta e organização de novas informações {\em a priori} biológicas}
 
-\item Contornar o problema da incompletude dos bancos de dados de interatomas (e.g., KEGG), que se dá no nível de estrutura da via de sinalização, assim como tratar a ausência de constantes de velocidade.
-  \begin{itemize}
-     \item{\bf Estrutura da via de sinalização.} \href{http://www.genome.jp/kegg-bin/show\_pathway?mmu04014}{no mapa da via de sinalização de Ras em camundongo}, existe uma aresta dizendo que Raf1 ativa MEK, mas não como se dá tal ativação. Por exemplo, no modelo apresentado na introdução, MEK é ativado após ser fosforilado duas vezes pela forma ativa de Raf1, dinâmica que exige duas equações para ser descrita em termos de cinética química. Para lidar com este problema, precisaremos estabelecer a lei cinética (tipo de reação) a ser utilizada de acordo com a natureza das espécies químicas envolvidas em uma dada interação. No exemplo dado, sabe-se que a ativação de MEK por Raf é ultrassensível, e que portanto pode ser modelada utilizando a equação de Hill~\cite{huang1996ultrasensitivity}.
-     \item{\bf Ausência de constantes de velocidade.} Dificulta tanto a estimação quanto o problema de otimização. Vamos contornar isso coletando e organizando informações extraídas de repositórios tais como o Sabio-RK~\cite{doi:10.1093/nar/gkr1046}, Brenda~\cite{doi:10.1093/nar/gkh081}, BioNumbers~\cite{milo2009bionumbers}, e possivelmente também  BioModels~\cite{le2006biomodels}. 
-  \end{itemize}
-\end{enumerate}
+Para contornar o problema da insuficiência de informações {\em a priori} utilizadas definir e ajustar um modelo funcional, precisaremos coletar e organizar informações biológicas que enriqueçam a quantidade de interações candidatas à inclusão no novo modelo, que informem a natureza da interação e que também permitam reduzir o número de parâmetros sujeitos à otimização por ajuste de curva.
+
+\paragraph{\bf Incompletude dos bancos de dados de interatomas.} Na metodologia recapitulada na introdução, foi utilizado o banco de interatomas KEGG como fonte tanto para as interações candidatas quanto para a natureza das mesmas, o que foi considerado insuficiente para gerar uma lista adequada de reações bioquímicas candidatas à inclusão no modelo~\cite{Wu2015metodo}. Para enriquecer as interações candidatas, assim como mapear algumas naturezas de interações (e.g., ativação, inibição, catálise, etc.), deveremos utilizar o STRING, um banco de dados de interação proteína-proteína que, em vários aspectos, generaliza o KEGG e outros bancos de dados similares~\cite{szklarczyk2010string}. 
+
+\paragraph{\bf Ausência de constantes de velocidade.} Este problema dificulta tanto a estimação do modelo funcional (i.e., mais parâmetros para estimar para um número fixo de amostras aumenta o erro de estimação) quanto o problema de otimização (i.e., cada parâmetro adicional no mínimo dobra o tamanho do espaço de busca). Contornaremos isso coletando e organizando constantes de velocidade extraídas de repositórios tais como o SABIO-RK~\cite{doi:10.1093/nar/gkr1046}, Brenda~\cite{doi:10.1093/nar/gkh081}, BioNumbers~\cite{milo2009bionumbers}, e possivelmente também  BioModels~\cite{le2006biomodels}.
+
+Poderemos ainda buscar reduzir o número de parâmetros em situações nas quais a topologia e a natureza das interações são conhecidas e são equivalentes a leis cinéticas mais simples; por exemplo, no modelo apresentado da figura~\ref{fig:example_reis_interdisciplinary:A}, a descrição da ativação de ERK por Ras-GTP exige um sistema de 8 EDOs contendo 20 parâmetros~\cite{Reis2017interdisciplinary}. Todavia, sabe-se que a dinâmica de ativação de ERK é similar a de enzimas cooperativas~\cite{huang1996ultrasensitivity}; portanto, em contextos nos quais as interações do modelo da figura~\ref{fig:example_reis_interdisciplinary:A} compõem um módulo relativamente isolado, a dinâmica da concentração de ERK ativo ($[ERK \myhyphen pp]$) pode ser modelada utilizando a \href{https://en.wikipedia.org/wiki/Hill\_equation\_(biochemistry)}{equação de Hill}:
+\begin{equation}
+[ERK \myhyphen pp] = \alpha \frac{[Ras \myhyphen GTP]^n}{K_d + [Ras \myhyphen GTP]^n}, \label{eq:Hill}
+\end{equation}
+na qual $K_d$ é a constante de dissociação, $n$ é o coeficiente de Hill e $\alpha$ é uma constante de escala. Dessa forma, se estamos interessados apenas na ativação de ERK e não temos dados experimentais para ajustar contra espécies químicas de reações intermediárias (e.g., Raf1 e MEK), podemos utilizar apenas a equação~\ref{eq:Hill}, reduzindo assim o número de parâmetros de 20 para 3.
+
+\subsubsection{Um novo procedimento para a seleção de modelos}
+
+Na metodologia recapitulada na introdução, a seleção de modelos era feita de forma incremental com o algoritmo SFS e baseada em uma função custo que se mostrou inadequada para esse fim~\cite{Wu2015metodo}. Dessa forma, precisaremos de um novo procedimento para a seleção de modelos, que exigirá novos algoritmos e funções custo.
+
+\paragraph{Escolha de um algoritmo de seleção de características.} Priorizaremos algoritmos que resolvam o problema de forma ótima, ou então algoritmos de aproximação que ao menos evitem o efeito de aninhamento de estratégias incrementais. Uma vez que a utilização de funções custo que penalizem {\em overfitting} de forma adequada provavelmente induzirá curvas em U nas cadeias do reticulado Booleano induzido pelo espaço de busca, aproximaremos o problema de seleção de características através do problema de otimização U-curve. Como o cálculo da função custo provavelmente será computacionalmente muito intensivo, o melhor algoritmo para esse fim tenderá a ser o U-Curve-Search (UCS), ou então variantes do mesmo que façam uso de diagramas de decisão binária reduzidos e ordenados~\cite{reis2012minimizaccao,reis2017ucsr}.
+
+% Obs: não entrei em detalhes aqui, pois senão ficaria muito longo, mas faz parte deste item a adaptação do UCS(R) para espaços de busca nos quais o reticulado Booleano não é completo (ele será completo se e somente se o grafo do interatoma com n reações for um K_n).
+
+
+\paragraph{Definição de uma função custo apropriada.} Uma função custo adequada para a seleção de modelos precisa levar em consideração a penalização por {\em overfitting} decorrente do acréscimo de novas espécies químicas e/ou reações sem a inclusão de novas medidas experimentais para ajustar o modelo aumentado. Uma possibilidade seria o uso do critério de informação de Akaike ({\em Akaike's Information Criterion} -- AIC)~\cite{bozdogan1987model}: seja $\mathcal{X}$ uma cadeia $X_1 \subset X_2 \subset \ldots \subset X_k$ composta por conjuntos de reações bioquímicas candidatas a incorporação ao modelo original, tal que $|X_{i+1}| = |X_i| + 1$ para todo $1 \le i \le k - 1$; definimos então uma função custo $c : \mathcal{X} \mapsto \mathbb{R}^+$, baseada no critério AIC, como:
+\begin{equation}
+c(X_i) = - 2 \mbox{ log } L(\hat{\theta}_{X_i}) + 2 |X_i|, \label{eq:AIC}
+\end{equation}
+na qual $L$ é uma função de verossimilhança e $\hat{\theta}_{X_i}$ é o estimador do conjunto de parâmetros $\theta$ do modelo levando em consideração a inclusão das reações contidas em $X_i$. A penalização por {\em overfitting} é dada pelo termo $2 |X_i|$ da equação~\ref{eq:AIC}. Os princípios do AIC foram aplicados com sucesso em seleção de modelos no contexto de discriminação de classes de redes biológicas~\cite{takahashi2012discriminating}. Também investigaremos para este fim o uso de abordagens Bayesianas~\cite{kirk2013model}, como por exemplo a técnica conhecida como {\em Bayesian inference-based modeling} (BIBm)~\cite{Xu2010}.
+
 
 
 \subsection{Desafios tecnológicos}
 
-\begin{enumerate}
+Os dois desafios tecnológicos deste projeto consistem no desenho e implementação dos banco de dados e de ferramentas que serão utilizados para testar as soluções para os problemas científicos apresentados anteriormente.
 
-% Obs: o primeiro item já estamos adiantando com os trabalhos para o X-Meeting 2017.
+\subsubsection{Desenho e implementação de um banco de dados relacional}
+
+As informações biológicas {\em a priori} que serão utilizadas na nova metodologia serão coletadas dos bancos de dados mencionados anteriormente (KEGG, STRING, SABIO-RK, etc.) e organizadas em um banco de dados relacional, provavelmente o \href{https://www.mysql.com/}{MySQL}. Num primeiro momento a coleta das informações será manual; posteriormente, a mesma poderá vir a ser automatizada por um robô. Por fim, este banco de dados deverá ser integrado ao \href{http://cetics.butantan.gov.br/ceticsdb/accounts/login/?next=/ceticsdb/}{CeTICSdb}, repositório de ômicas desenvolvido e mantido pelo grupo de Biologia Computacional do CeTICS, para que aquele fique à disposição para consultas e utilização em novas ferramentas.
+
+
+\subsubsection{Integração de ferramentas para a realização de seleção de modelos}
+
+% Obs: para este item já adiantamos algo com os trabalhos que inicialmente visavam o X-Meeting 2017.
 %
-\item Integração apropriada do featsel~\cite{Reis2017featsel} com o SigNetSim~\cite{Noel2017SigNetSim} para seleção de modelos.
-
-\item Organização das informações coletadas em um banco de dados relacional, que será integrado ao \href{http://cetics.butantan.gov.br/ceticsdb/accounts/login/?next=/ceticsdb/}{CeTICSdb}, repositório de ômicas desenvolvido e mantido pelo grupo de Biologia Computacional do CeTICS.
-
-\end{enumerate}
+Como mencionamos na introdução, a ferramenta SigNetSim é uma alternativa disponível para otimização por ajuste de curva de modelos funcionais, e deverá ser empregada neste projeto. Para realizar a seleção de modelos (que é equivalente à seleção de características), utilizaremos o \href{https://github.com/msreis/featsel}{featsel}, um arcabouço para {\em benchmarking} de algoritmos e funções custo de seleções de características~\cite{Reis2017featsel}. featsel é codificado em C++, enquanto SigNetSim foi implementado em Python, o que dificultará a integração de ambos. \href{https://docs.python.org/2/extending/embedding.html}{Embora existam maneiras} \href{https://docs.python.org/2/extending/embedding.html}{de utilizar scripts em Python dentro de código C++}, utilizaremos diretamente os dois componentes do SigNetSim que nos interessam, pois os mesmos são codificados e/ou têm versão em C/C++:
+\begin{itemize}
+\item \href{https://github.com/vincent-noel/plsa}{plsa}, que implementa um algoritmo paralelizado de recozimento simulado ({\em simulated annealing}) para otimização de ajuste de curva~\cite{chu1999parallel};
+\item \href{http://sbml.org/Software/libSBML}{libSBML}, leitor e gravador de modelos funcionais no formato {\em Systems Biology Markup Language (SBML)}~\cite{hucka2003systems}.
+\end{itemize}
+As duas bibliotecas listadas acima serão utilizadas para definir uma nova classe de função custo no featsel. Esta nova função custo fará chamadas ao banco de dados relacional descrito na seção anterior e será utilizada juntamente com o UCS e outros algoritmos para a realização de seleção de modelos.
 
 %------------------------------------------------------------------------------%
 
 \section{Plano de trabalho e cronograma de execução}
 
-A primeira etapa deste trabalho consiste em construir um banco de dados
-para armazenar interações entre espécies químicas e suas 
-características. Começaremos a construção deste banco extraindo
-interações de mapas estáticos disponíveis em bancos como KEGG, etc; em
-seguida, devemos usar outros bancos de dados como BioNumbers para 
-extrair valores de constantes de velocidade para as interações 
-recolhidas. Também devemos mapear interações a modelos de cinética 
-química adequados de acordo com a natureza dessas interações. Por fim,
-o banco criado deverá ser integrado ao CeTICSdb.
+Nesta seção, listamos algumas metas planejadas para a execução deste projeto proposto. O cronograma de execução dessas metas é apresentado na tabela~\ref{tab:cronograma}.
 
-Após construído o banco de dados, iremos integrar o SigNetSim ao 
-arcabouço featsel, que será usado para implementação de novos algoritmos
-de busca e funções de custo para o problema de identificação de vias 
-de sinalização celular. Além disso, reimplementaremos e/ou refatoraremos 
-o código legado de Lulu Wu, usando desta vez o arcabouço featsel para 
-seleção de modelos. Ao final desta etapa, devemos ser capazes
-de repetir os experimentos de Lulu Wu a fim de verificar as melhorias na
-abordagem ao minimizar a incompletude do banco de dados. Também devemos
-criar novos experimentos parecidos com os últimos, com o intuito de 
-comparar as metodologias criadas no decorrer do projeto.
+\begin{enumerate}
 
-Em seguida, devemos estudar ao menos duas métricas diferentes para 
-avaliar a qualidade de modelos funcionais penalizando a complexidade 
-dos mesmos. A primeira métrica deve se basear no critério de informação 
-de Akaike, enquanto a segunda usa uma abordagem Bayesiana para avaliar 
-os modelos propostos. Ambas abordagens serão devidamente modificadas 
-para serem implementadas no arcabouço featsel, para avaliar modelos 
-funcionais. As duas metodologias geradas nesta etapa devem ser 
-avaliadas na identificação de vias de sinalização celular já bem 
-conhecidas, assim como foi feito por Lulu Wu.
+    \item Estudo da estrutura dos repositórios KEGG e STRING. Criação de um banco de dados relacional que seja capaz de armazenar interações e seus respectivos atributos, que serão retirados desses dois bancos;
 
-As novas funções de custo criadas penalizam a complexidade dos modelos, 
-portanto estas funções devem descrever uma curva em U nas cadeias de 
-modelos funcionais do espaço de busca. Desta forma, criaremos novos
-algoritmos de busca que explorem essa característica da função de custo.
-Assim como as novas funções de custo, os novos algoritmos de busca serão
-implementados no arcabouço featsel, e as novas metodologias avaliadas
-na identificação de vias de sinalização.
+    \item Estudo da estrutura dos repositórios SABIO-RK, BRENDA e BioNumbers. Reestruturação do banco de dados do item anterior para armazenar também as contantes de velocidade disponíveis na literatura;
 
-Por fim, esperamos ter elaborado uma nova metodologia que tenha superado
-os limites apresentados no trabalho de Lulu Wu e então, aplicaremos a 
-nova abordagem na identificação de vias da linhagem tumoral murina Y1.
+    \item Criação de uma nova classe de função custo no featsel, incorporando na mesma os dois componentes do SigNetSim citados anteriormente, plsa e libSBML;
 
-\subsection{Descrição de atividades}
-\begin{itemize}
-    \item{\bf Atividade 1.} Estudo da estrutura dos bancos dados de 
-        interatomas como o KEGG e STRING
-    \item{\bf Atividade 2.} Criação de um banco de dados relacional que
-        seja capaz de armazenar interações retiradas dos bancos de dados
-        de interatomas.
-    \item{\bf Atividade 3.} Estudo da estrutura de bancos de dados de 
-        cinética química como o SABIO-RK, Brenda, etc.
-    \item{\bf Atividade 4.} Reestruturação do banco de dados de 
-        interações para armazenar também contantes de velocidade.
-    \item{\bf Atividade 5.} Estabelecer leis de cinética adequadas
-        de acordo com a natureza das espécies químicas envolvidas em uma
-        interação.
-    \item{\bf Atividade 6.} Reestruturação do banco de dados de 
-        interações para suportar o armazenamento de tipo de interação.
-    \item{\bf Atividade 7.} Integração do banco de dados de interações
-        criado ao CeTICSdb.
-    \item{\bf Atividade 8.} Integração do arcabouço featsel ao 
-        SigNetSim.
-    \item{\bf Atividade 9.} Implementar e/ou refatorar a metodologia de 
-        Lulu com a devida integração de featsel e SigNetSim.
-    \item{\bf Atividade 10.} Testes da metodologia refatorada com vias
-        de sinalização já bem modeladas e avaliação dos modelos gerados.
-    \item{\bf Atividade 11.} Estudo do critério de informação AIC.
-    \item{\bf Atividade 12.} Implementação de uma nova função de custo
-        no arcabouço featsel para os modelos funcionais, baseada no 
-        critério de informação AIC
-    \item{\bf Atividade 13.} Testes em vias de sinalização já bem 
-        modeladas e avaliação dos modelos gerados usando nova função de
-        custo.
-    \item{\bf Atividade 14.} Estudo de funções de custo com abordagem
-        Bayesiana para seleção de modelos.
-    \item{\bf Atividade 15.} Implementação de uma nova função de custo 
-        no arcabouço featsel para modelos funcionais que faz uma 
-        avaliação Bayesiana dos modelos.
-    \item{\bf Atividade 16.} Testes em vias de sinalização já bem
-        modeladas e avaliação dos modelos gerados usando nova função de
-        custo.
-    \item{\bf Atividade 17.} Implementação de novos algoritmos de busca
-        para o problema de seleção de modelos funcionais no arcabouço
-        featsel.
-    \item{\bf Atividade 18.} Testes em vias de sinalização já bem
-        modeladas e avaliação dos modelos gerados usando novo algoritmo
-        de busca.
-    \item{\bf Atividade 19.} Aplicação da metodologia na identificação de vias de sinalização celular da linnhagem tumoral murina Y1.
+    \item Refatoração da metodologia introduzida em 2015 por Lulu Wu, integrando-a ao featsel para fins de comparação com a nova metodologia. Testes para reprodução dos resultados originais com o modelo de Bianconi e colegas.
 
-\end{itemize}
-\subsection{Cronograma proposto}
-A tabela \ref{tab:cronograma} apresenta um cronograma para este projeto.
+    \item Estudo do critério de informação AIC. Implementação de uma nova função de custo no arcabouço featsel para os modelos funcionais, baseada no critério de informação AIC;
 
+    \item Testes com instâncias artificiais, com o modelo de Bianconi e colegas e também com dados biológicos reais extraídos de bancos de dados de {\em Mus musculus} (camundongo) e também os produzidos com a linhagem tumoral murina (de camundongo) Y1; 
+
+    \item Estudos de leis cinéticas (e.g., \href{https://en.wikipedia.org/wiki/Michaelis\%E2\%80\%93Menten\_kinetics}{Michaelis--Menten}, Hill, etc.), dos motivos ({\em motifs}) de interatomas a elas associados e das condições necessárias e suficientes para a simplificação utilizando essas leis. Reestruturação do banco de dados relacional para a aplicação de leis cinéticas nos modelos funcionais.
+
+    \item Nova rodada de testes com instâncias artificiais, com o modelo de Bianconi e colegas e de dados biológicos reais;
+   
+    \item Estudo de funções de custo com abordagem Bayesiana para seleção de modelos (e.g., BIBm). Implementação de uma nova função de custo no arcabouço featsel para modelos funcionais que faça uma avaliação Bayesiana dos modelos;
+
+    \item Terceira rodada de testes com instâncias artificiais, com o modelo de Bianconi e colegas e com dados biológicos reais;
+
+    \item Integração do banco de dados relacional ao repositório CeTICSdb.
+
+\end{enumerate}
 
 
 \begin{table}[ht!]
-\caption{Cronograma de atividades previstas nesta proposta de projeto.} 
+\caption{Cronograma de atividades previstas nesta proposta de projeto. EQM é a abreviação de Exame de Qualificação de Mestrado.} 
 \label{tab:cronograma}
 \begin{center}
 \smallskip
 \resizebox{\columnwidth}{!}{
-\begin{tabular}{l ccc ccc ccc ccc}
+\begin{tabular}{c ccc ccc ccc ccc}
     \toprule
-    \small Atividade/mês & \small Jan.18 & \small Fev.18 & \small Mar.18
+    \small \# atividade / mês & \small Jan.18 & \small Fev.18 & \small Mar.18
                          & \small Abr.18 & \small Mai.18 & \small Jun.18
                          & \small Jul.18 & \small Ago.18 & \small Set.18
                          & \small Out.18 & \small Nov.18 & \small Dez.18
     \\ \hline
 
-    \small Atividade 1   
-    & \small {\bf x} & \small - & \small - & \small - 
-    & \small - & \small - & \small - & \small - 
+    \small 1   
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x}
+    & \small {\bf x} & \small {\bf x} & \small - & \small - 
     & \small - & \small - & \small - & \small - \\ 
 
-    \small Atividade 2   
-    & \small - & \small {\bf x} & \small {\bf x} & \small - 
+    \small 2   
     & \small - & \small - & \small - & \small - 
-    & \small - & \small - & \small - & \small - \\ 
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x} 
+    & \small {\bf x} & \small {\bf x} & \small - & \small - \\ 
 
-    \small Atividade 3   
-    & \small - & \small - & \small {\bf x} & \small -
+    \small 3   
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small -
     & \small - & \small - & \small - & \small - 
     & \small - & \small - & \small - & \small - \\
 
-    \small Atividade 4
+    \small 4
     & \small - & \small - & \small - & \small {\bf x}
-    & \small {\bf x} & \small - & \small - & \small - 
+    & \small {\bf x} & \small {\bf x} & \small - & \small - 
     & \small - & \small - & \small - & \small - \\ 
 
-    \small Atividade 5   
-    & \small - & \small - & \small - & \small -  
+    \small 5   
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x} 
     & \small {\bf x} & \small {\bf x} & \small - & \small - 
     & \small - & \small - & \small - & \small - \\ 
 
 
-    \small Atividade 6   
+    \small 6   
     & \small - & \small - & \small - & \small -  
-    & \small - & \small {\bf x} & \small {\bf x} & \small -
-    & \small - & \small - & \small - & \small - \\ 
+    & \small - & \small {\bf x} & \small {\bf x} & \small {\bf x}
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x} \\ 
 
 
-    \small Atividade 7
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small - & \small {\bf x} & \small {\bf x}
-    & \small - & \small - & \small - & \small - \\ 
-
-    \small Atividade 8  
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small - & \small - & \small {\bf x}
-    & \small {\bf x} & \small {\bf x} & \small - & \small - \\ 
-
-
-    \small Atividade 9
+    \small EQM
     & \small - & \small - & \small - & \small -  
     & \small - & \small - & \small - & \small -
-    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small - \\ 
-    
-    
-    \small Atividade 10
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small - & \small - & \small -
-    & \small - & \small - & \small - & \small {\bf x} \\ 
-    
-    \small Primeiro Relatório
+    & \small - & \small {\bf x} & \small {\bf x} & \small {\bf x} \\ 
+
+
+    \small Relatório Parcial
     & \small - & \small - & \small - & \small -  
     & \small - & \small - & \small - & \small -
     & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
-
 
 
     \bottomrule
@@ -421,63 +365,40 @@ A tabela \ref{tab:cronograma} apresenta um cronograma para este projeto.
 
     \\ \hline
     
-    \small Atividade 10
-    & \small {\bf x} & \small - & \small - & \small -  
-    & \small - & \small - & \small - & \small -
+    \small 7
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & {\bf x}
+    & \small {\bf x} & \small {\bf x} & \small - & \small -
     & \small - & \small - & \small - & \small - \\ 
 
-
-    \small Atividade 11 
-    & \small {\bf x} & \small {\bf x} & \small - & \small -  
-    & \small - & \small - & \small - & \small -
-    & \small - & \small - & \small - & \small - \\ 
-    
-    
-    \small Atividade 12
-    & \small - & \small {\bf x} & \small {\bf x} & -
-    & \small - & \small - & \small - & \small -
-    & \small - & \small - & \small - & \small - \\ 
-
-    \small Atividade 13
+    \small 8
     & \small - & \small - & \small - & \small {\bf x}
-    & \small {\bf x} & \small - & \small - & \small -
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small -
     & \small - & \small - & \small - & \small - \\ 
 
-    \small Atividade 14
-    & \small - & \small - & \small - & \small -  
-    & \small {\bf x} & \small - & \small - & \small -
-    & \small - & \small - & \small - & \small - \\ 
+    \small 9
+    & \small - & \small - & \small {\bf x} & \small {\bf x}  
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x}
+    & \small {\bf x} & \small {\bf x} & \small - & \small - \\ 
 
-
-    \small Atividade 15
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small {\bf x} & \small {\bf x} & \small -
-    & \small - & \small - & \small - & \small - \\ 
-
-    \small Atividade 16
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small - & \small - & \small {\bf x}
-    & \small - & \small - & \small - & \small - \\ 
-
-    \small Atividade 17
-    & \small - & \small - & \small - & \small -  
-    & \small - & \small - & \small {\bf x} & \small {\bf x}
-    & \small {\bf x} & \small - & \small - & \small - \\ 
-
-    \small Atividade 18
+    \small 10
     & \small - & \small - & \small - & \small -  
     & \small - & \small - & \small - & \small -
-    & \small - & \small {\bf x} & \small - & \small - \\ 
+    & \small {\bf x} & \small {\bf x} & \small {\bf x} & \small {\bf x} \\ 
 
 
-    \small Atividade 19
+    \small 11 
+    & \small - & \small - & \small - & \small -  
+    & \small - & \small - & \small - & \small -
+    & \small - & \small {\bf x} & \small {\bf x} & \small {\bf x} \\ 
+
+
+    \small Defesa
     & \small - & \small - & \small - & \small -  
     & \small - & \small - & \small - & \small -
     & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
+   
 
-
-
-    \small Segundo Relatório
+    \small Relatório Final
     & \small - & \small - & \small - & \small -  
     & \small - & \small - & \small - & \small -
     & \small - & \small - & \small {\bf x} & \small {\bf x} \\ 
@@ -496,19 +417,10 @@ A tabela \ref{tab:cronograma} apresenta um cronograma para este projeto.
 %------------------------------------------------------------------------------%
 
 \section{Forma de análise e disseminação de resultados}
-Os métodos de identificação de vias de sinalização celular criados 
-neste trabalho serão avaliados em três frentes: a primeira será a 
-capacidade do método em reconstruir um recorte de modelo funcional
-conhecido a partir de dados simulados no mesmo; a segunda, a qualidade
-dos modelos funcionais encontrados quando medimos a semelhança entre
-os dados gerados pelo modelo e os dados observados em experimentos 
-biológicos; e por último, o uso de recursos computacionais, levando em 
-consideração o consumo de tempo e memória do método.
 
-Ao fim do trabalho, esperamos escrever um artigo científico no qual
-descreveremos como sistematizamos a identificação de vias de sinalização
-celular, assim como a aplicação deste método no estudo da via de
-sinalização celular da linhagem tumoral murina Y1.
+O método de identificação de vias de sinalização celular a ser desenvolvido neste projeto proposto será avaliado em quatro frentes: a primeira delas é a capacidade do método em reconstruir um recorte de modelo funcional conhecido a partir de dados simulados no mesmo, critério análogo ao adotado na dissertação de mestrado de Lulu Wu. A segunda frente é a semelhança entre os dados gerados em simulações do modelo e os dados observados em experimentos biológicos, ou seja, a capacidade de produção de modelos fenomenológicos. Já a terceira frente avaliará o desempenho do ponto de vista computacional, ou seja, o consumo de tempo e memória do método. Por fim, e provavelmente o mais importante de todos, será o teste da capacidade \underline{preditiva} dos modelos funcionais obtidos com o método, ou seja, verificaremos se os modelos produzidos são sujeitos a um baixo {\em ovefitting} e que são capazes de prever o funcionamento de mecanismos de vias de sinalização celular, em particular em nosso estudo de caso, as células murinas tumorais Y1.
+
+Comunicaremos o progresso de nosso trabalho em conferências no Brasil e no exterior: projetamos a participação do aluno nas edições de 2018 e 2019 do \href{http://www.x-meeting.com/events/}{X-Meeting}, a mais importante conferência brasileira de Bioinformática. Além disso, esperamos que o aluno possa participar em um desses dois anos da \href{http://www.cpe.vt.edu/icsb2017/}{{\em International Conference on Systems Biology} (ICSB)}, a mais importante conferência mundial de Biologia Sistêmica. Por fim, próximo ao encerramento dos trabalhos, escreveremos um artigo científico no qual descreveremos nosso novo método de identificação de vias de sinalização celular. Ademais, esperamos auxiliar na preparação de outros artigos, estes com viés mais biológico, nos quais serão reportados resultados obtidos em validações experimentais das previsões de nossos modelos.
 
 %------------------------------------------------------------------------------%
 
